@@ -134,3 +134,5 @@ dmypy.json
 # PyCharm
 .idea
 
+kata-banking-system/trash
+/trash
