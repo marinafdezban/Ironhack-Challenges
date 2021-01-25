@@ -5,16 +5,6 @@ import re
 import json
 import math
 
-API_TOKEN = 'd3739fbed22921d17f5b0b493aa45360ad319896'
-USERNAME = 'marinafdezban'
-BASE_URL = 'https://api.github.com/'
-KEY = 'repos/'
-OWNER = 'ta-data-mad/'
-REPO = 'dataptmad1120/'
-SEARCH = 'search/issues?q=repo:' + OWNER + REPO + '+type:pr+state:{}'
-PULLS = 'pulls?page={}&per_page=100&state={}'
-COMMITS = 'pulls/{}/commits'
-STATE = 'open'
 
 field_list1 = ['number',
                'title',
@@ -78,7 +68,7 @@ def pages(base_url, search, state, username, api_token):
 
 # Check the committs in order to know which labs are ready to be reviewed.
 
-def get_commits(base_url, key, owner, repo, commits, pull, username, api_token) -> object:
+def get_commits(base_url, key, owner, repo, commits, pull, username, api_token):
     r_commits = requests.get(base_url + key + owner + repo + commits.format(pull),
                              auth=(username, api_token)).json()
     df_commits = pd.json_normalize(r_commits)
@@ -92,7 +82,7 @@ def get_commits(base_url, key, owner, repo, commits, pull, username, api_token) 
 
 # And finally get the 'pull requests'.
 
-def get_pulls(base_url, key, owner, repo, pulls, search, state, username, api_token, field_list1) -> object:
+def get_pulls(base_url, key, owner, repo, pulls, search, state, username, api_token, field_list1):
     pulls_list = []
     max_pages = pages(base_url, search, state, username, api_token)
     for i in range(max_pages):
